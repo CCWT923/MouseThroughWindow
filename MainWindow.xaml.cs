@@ -23,15 +23,18 @@ namespace MouseThroughWindow
     /// </summary>
     public partial class MainWindow : Window
     {
+        /// <summary>
+        /// 扩展窗口样式
+        /// </summary>
         private const int GWL_EXSTYLE = -20;
         private const int WS_EX_TRANSPARENT = 0x00000020;
         private const int WS_EX_TOOLWINDOW = 0x00000080;
 
         [DllImport("user32.dll")]
-        private static extern int GetWindowLong(IntPtr hWnd, int nIndex);
+        private static extern int GetWindowLongPtr(IntPtr hWnd, int nIndex);
 
         [DllImport("user32.dll")]
-        private static extern int SetWindowLong(IntPtr hwnd, int nIndex, int dwLong);
+        private static extern int SetWindowLongPtr(IntPtr hwnd, int nIndex, int dwLong);
 
         public MainWindow()
         {
@@ -41,8 +44,8 @@ namespace MouseThroughWindow
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             IntPtr hwnd = new WindowInteropHelper(this).Handle;
-            int extendedStyle = GetWindowLong(hwnd, GWL_EXSTYLE);
-            SetWindowLong(hwnd, GWL_EXSTYLE, extendedStyle | WS_EX_TRANSPARENT | WS_EX_TOOLWINDOW);
+            int extendedStyle = GetWindowLongPtr(hwnd, GWL_EXSTYLE);
+            SetWindowLongPtr(hwnd, GWL_EXSTYLE, extendedStyle | WS_EX_TRANSPARENT | WS_EX_TOOLWINDOW);
         }
     }
 }
